@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.yape.food.ui.layout.AppScaffold
+import com.yape.food.ui.nav.MainNavigation
 import com.yape.food.ui.theme.YapeFoodTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,12 +20,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             YapeFoodTheme {
-                // A surface container using the 'background' color from the theme
+                val navController = rememberNavController()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    AppScaffold {
+                        MainNavigation(navController)
+                    }
                 }
             }
         }
