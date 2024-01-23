@@ -70,6 +70,7 @@ dependencies {
     //Compose libs
     implementation(libs.androidx.constraintlayout)
     implementation(libs.compose.navigation)
+    implementation(libs.coil.compose)
 
     //Unit tests
     testImplementation(libs.junit)
