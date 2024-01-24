@@ -11,5 +11,8 @@
     <string name="recipe_list_empty">Easy recipes for your life!</string>
     <string name="recipe_list_empty_sub">Start typing for new recipes</string>
 
+    //Error list
+    <string name="recipe_list_error">Woo, something went wrong!</string>
+    <string name="recipe_list_error_sub">Let\'s start again for new recipes</string>
 
 </resources>

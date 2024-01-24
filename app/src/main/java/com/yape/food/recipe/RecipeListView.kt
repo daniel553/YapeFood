@@ -1,6 +1,11 @@
 package com.yape.food.recipe
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,20 +15,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yape.food.R
 import com.yape.food.model.RecipeItem
+import com.yape.food.ui.MessageCardView
 import com.yape.food.ui.theme.YapeFoodTheme
 
 
@@ -108,30 +116,96 @@ fun RecipeListEmptyView(modifier: Modifier = Modifier) {
                 .height(260.dp)
                 .padding(16.dp)
         ) {
-            Box(
-                Modifier.fillMaxSize()
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.apple),
-                    modifier = Modifier.fillMaxSize(),
-                    contentDescription = "Background Image",
-                    contentScale = ContentScale.Crop
+            MessageCardView(
+                title = stringResource(id = R.string.recipe_list_empty),
+                subtitle = stringResource(id = R.string.recipe_list_empty_sub),
+                background = painterResource(id = R.drawable.apple),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecipeListLoadingViewPreview() {
+    RecipeListEmptyView()
+}
+
+
+// Loading State
+@Composable
+fun RecipeListLoadingView(
+    modifier: Modifier = Modifier,
+    itemsCount: Int = 4,
+) {
+
+    Box(modifier = modifier.fillMaxSize()) {
+        val infiniteTransition = rememberInfiniteTransition(label = "infinite")
+        val color by infiniteTransition.animateColor(
+            initialValue = MaterialTheme.colorScheme.primaryContainer,
+            targetValue = MaterialTheme.colorScheme.inversePrimary,
+            animationSpec = infiniteRepeatable(
+                animation = tween(1000, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse
+            ),
+            label = "color"
+        )
+
+        LazyColumn(modifier = modifier) {
+            //💡Header view
+            item {
+                RecipeHeaderView(modifier = Modifier.height(180.dp))
+            }
+
+            //💡The intention is to create like a skeleton of a list, but quite simple with animation
+            items(4) {
+                Box(
+                    modifier = Modifier
+                        .height(260.dp)
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .padding(1.dp)
+                        .shadow(elevation = 4.dp, clip = false, shape = RoundedCornerShape(8.dp))
+                        .drawBehind {
+                            drawRect(color)
+                        }
                 )
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+            }
+
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecipeListLoadingPreview() {
+    YapeFoodTheme {
+        RecipeListLoadingView()
+    }
+}
+
+// Error state ------
+@Composable
+fun RecipeListErrorView(
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier.fillMaxSize()) {
+
+        LazyColumn(modifier = modifier) {
+            //💡Header view
+            item {
+                RecipeHeaderView(modifier = Modifier.height(180.dp))
+            }
+
+            item {
+                MessageCardView(
+                    title = stringResource(id = R.string.recipe_list_error),
+                    subtitle = stringResource(id = R.string.recipe_list_error_sub),
+                    background = painterResource(id = R.drawable.apple),
                     modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.recipe_list_empty),
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                    Text(
-                        text = stringResource(id = R.string.recipe_list_empty_sub),
-                        style = MaterialTheme.typography.labelMedium,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                }
+                )
             }
         }
     }
@@ -139,6 +213,8 @@ fun RecipeListEmptyView(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun RecipeListEmptyViewPreview() {
-    RecipeListEmptyView()
+fun RecipeListErrorViewPreview() {
+    YapeFoodTheme {
+        RecipeListErrorView()
+    }
 }

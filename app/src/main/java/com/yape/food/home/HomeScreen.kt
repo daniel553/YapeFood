@@ -3,10 +3,11 @@ package com.yape.food.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.yape.food.recipe.RecipeListErrorView
+import com.yape.food.recipe.RecipeListLoadingView
 import com.yape.food.recipe.RecipeListView
 import com.yape.food.ui.theme.YapeFoodTheme
 
@@ -32,14 +33,6 @@ fun HomeScreen(
         modifier = modifier.fillMaxWidth()
     ) {
         when (state) {
-            HomeState.Error -> {
-                Text(text = "Error state")
-            }
-
-            HomeState.Loading -> {
-                Text(text = "Loading")
-            }
-
             is HomeState.Success -> {
                 RecipeListView(
                     list = state.list,
@@ -47,6 +40,19 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxSize()
                 )
             }
+
+            HomeState.Loading -> {
+                RecipeListLoadingView(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            HomeState.Error -> {
+                RecipeListErrorView(
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
         }
     }
 }
