@@ -1,24 +1,28 @@
 package com.yape.food.recipe
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import com.yape.food.R
 import com.yape.food.model.RecipeItem
 import com.yape.food.ui.theme.YapeFoodTheme
 
@@ -41,20 +45,26 @@ fun RecipeListView(
             LazyColumn(modifier = modifier) {
                 //💡Header view
                 item {
-
-                    RecipeHeaderView()
+                    RecipeHeaderView(modifier = Modifier.height(180.dp))
                 }
                 //💡 It's a good practice to define the key of the item
-                items(list, key = { recipe -> recipe }) { recipe ->
+                items(list, key = { recipe -> recipe.id }) { recipe ->
                     RecipeListItemView(
                         recipe = recipe,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .height(260.dp)
+                            .fillMaxWidth()
                     ) {
                         onSelect(recipe)
                     }
                 }
             }
-            RecipeSearchView(onSearch = {})
+            RecipeSearchView(
+                onSearch = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, end = 32.dp, top = 32.dp)
+            )
         }
     }
 }
@@ -62,9 +72,14 @@ fun RecipeListView(
 @Preview(showBackground = true)
 @Composable
 fun RecipeListViewPreview() {
-    val list = emptyList<RecipeItem>()
+    val list = (0..3).map {
+        RecipeItem(
+            id = it.toLong(),
+            name = "Recipe Name"
+        )
+    }
     YapeFoodTheme {
-        RecipeListView(list, {})
+        RecipeListView(list, {}, modifier = Modifier.fillMaxWidth())
     }
 }
 
@@ -72,10 +87,53 @@ fun RecipeListViewPreview() {
 @Composable
 fun RecipeListEmptyView(modifier: Modifier = Modifier) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-
+        Box {
+            RecipeHeaderView(modifier = Modifier.height(160.dp))
+            RecipeSearchView(
+                onSearch = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, end = 32.dp, top = 32.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(260.dp)
+                .padding(16.dp)
+        ) {
+            Box(
+                Modifier.fillMaxSize()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.apple),
+                    modifier = Modifier.fillMaxSize(),
+                    contentDescription = "Background Image",
+                    contentScale = ContentScale.Crop
+                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.recipe_list_empty),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                    Text(
+                        text = stringResource(id = R.string.recipe_list_empty_sub),
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -83,28 +141,4 @@ fun RecipeListEmptyView(modifier: Modifier = Modifier) {
 @Composable
 fun RecipeListEmptyViewPreview() {
     RecipeListEmptyView()
-}
-
-//💡To be reused by the lazy column items
-@Composable
-fun RecipeListItemView(
-    recipe: RecipeItem,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit // Intended to be empty
-) {
-    Column(
-        modifier = modifier
-            .padding(8.dp)
-            .shadow(elevation = 4.dp, clip = false, shape = RoundedCornerShape(8.dp))
-            .clip(RoundedCornerShape(8.dp))
-            .clickable { onClick() }) {
-        Box {
-            AsyncImage(model = recipe.url, contentDescription = "recipe")
-            Text(
-                text = recipe.name.uppercase(),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)
-            )
-        }
-    }
 }

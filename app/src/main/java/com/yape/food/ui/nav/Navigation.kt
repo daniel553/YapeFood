@@ -2,11 +2,16 @@ package com.yape.food.ui.nav
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.yape.food.home.HomeScreen
+import com.yape.food.home.HomeViewModel
 
 // 💡Main navigation will hold the list of recipes
 @Composable
@@ -18,8 +23,9 @@ fun MainNavigation(navController: NavHostController) {
         composable(
             route = Router.HomeScreen.destination
         ) {
-            //TODO: Add home screen
-            Text(text = "Home Screen")
+            val viewModel: HomeViewModel = hiltViewModel()
+            val state by viewModel.uiState.collectAsStateWithLifecycle()
+            HomeScreen(state = state, onEvent = {})
         }
 
         composable(

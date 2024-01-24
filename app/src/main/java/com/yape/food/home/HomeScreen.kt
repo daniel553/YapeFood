@@ -3,12 +3,10 @@ package com.yape.food.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.yape.food.recipe.RecipeListView
 import com.yape.food.ui.theme.YapeFoodTheme
 
@@ -31,9 +29,7 @@ fun HomeScreen(
 ) {
     //💡Depending on state a state screen will be shown
     Column(
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         when (state) {
             HomeState.Error -> {

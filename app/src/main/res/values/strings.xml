@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">YapeFood</string>
+
+    //Home screen
+    <string name="home_morning">Good Morning!</string>
+    <string name="home_afternoon">Good Afternoon!</string>
+    <string name="home_evening">Good Evening!</string>
+    <string name="home_time_default">Welcome back!</string>
+
+    //Empty list
+    <string name="recipe_list_empty">Easy recipes for your life!</string>
+    <string name="recipe_list_empty_sub">Start typing for new recipes</string>
+
+
 </resources>
