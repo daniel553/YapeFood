@@ -1,7 +1,9 @@
 package com.yape.data.recipe
 
 import com.yape.data.recipe.db.RecipeEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,10 +38,14 @@ class RecipeRepository @Inject constructor(
 
     override suspend fun deleteFromDb(recipe: RecipeEntity) = local.delete(recipe)
 
-    override suspend fun fetch(): Boolean {
-        val allRecipes = remote.fetchAll()
-        local.insertAll(allRecipes)
-        return allRecipes.isNotEmpty()
+    override suspend fun fetch(): Boolean = withContext(Dispatchers.IO) {
+        //💡For demo proposes, I assume that once fetched data for first time, then load local data subsequently
+        var allRecipes = local.getAll()
+        if (allRecipes.isEmpty()) {
+            allRecipes = remote.fetchAll()
+            local.insertAll(allRecipes)
+        }
+        allRecipes.isNotEmpty()
     }
 
     /**

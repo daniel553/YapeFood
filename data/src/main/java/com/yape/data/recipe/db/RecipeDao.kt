@@ -7,15 +7,18 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * 💡The integration with Room and coroutines manages the way to access to db
+ * with <b>suspend</b> keyword to not block UI thread.
+ */
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM Recipe ORDER BY id")
     fun all(): Flow<List<RecipeEntity>>
 
-    /**
-     * 💡The integration with Room and coroutines manages the way to access to db
-     * with <b>suspend</b> keyword to not block UI thread.
-     */
+    @Query("SELECT * FROM Recipe ORDER BY id")
+    fun getAll(): List<RecipeEntity>
+
     @Query("SELECT * FROM Recipe WHERE id = :id")
     suspend fun getById(id: Long): RecipeEntity
 

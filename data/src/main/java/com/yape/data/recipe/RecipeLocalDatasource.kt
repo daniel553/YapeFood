@@ -10,6 +10,7 @@ import javax.inject.Singleton
 interface IRecipeLocalDatasource {
     val recipes: Flow<List<RecipeEntity>>
 
+    suspend fun getAll(): List<RecipeEntity>
     suspend fun insert(recipe: RecipeEntity): Long
     suspend fun insertAll(recipes: List<RecipeEntity>)
     suspend fun getById(id: Long): RecipeEntity
@@ -30,6 +31,7 @@ class RecipeLocalDatasource @Inject constructor(
     override val recipes: Flow<List<RecipeEntity>>
         get() = dao.all()
 
+    override suspend fun getAll(): List<RecipeEntity> = dao.getAll()
     override suspend fun insert(recipe: RecipeEntity): Long = dao.insert(recipe)
 
     override suspend fun insertAll(recipes: List<RecipeEntity>) = dao.insertAll(recipes)

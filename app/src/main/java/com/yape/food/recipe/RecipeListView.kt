@@ -6,6 +6,7 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,6 +40,7 @@ import com.yape.food.ui.theme.YapeFoodTheme
  * 💡The recipes list view is like a RecyclerView in a compose way, so as a recycler view it
  * is good to define a "ViewHolder" that can be reused like down below.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RecipeListView(
     list: List<RecipeItem>,
@@ -60,8 +62,9 @@ fun RecipeListView(
                     RecipeListItemView(
                         recipe = recipe,
                         modifier = Modifier
-                            .height(260.dp)
+                            .height(itemViewHeight)
                             .fillMaxWidth()
+                            .animateItemPlacement()
                     ) {
                         onSelect(recipe)
                     }
@@ -113,7 +116,7 @@ fun RecipeListEmptyView(modifier: Modifier = Modifier) {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(260.dp)
+                .height(itemViewHeight)
                 .padding(16.dp)
         ) {
             MessageCardView(
@@ -162,7 +165,7 @@ fun RecipeListLoadingView(
             items(4) {
                 Box(
                     modifier = Modifier
-                        .height(260.dp)
+                        .height(itemViewHeight)
                         .fillMaxWidth()
                         .padding(8.dp)
                         .clip(RoundedCornerShape(8.dp))

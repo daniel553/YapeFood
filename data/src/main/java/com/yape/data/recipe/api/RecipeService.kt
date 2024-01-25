@@ -24,7 +24,7 @@ class RecipeService @Inject constructor(
                 api.getAll()
             }.getOrNull()
 
-            if (recipes != null) {
+            if (recipes != null && recipes.body() != null) {
                 if (recipes.isSuccessful) {
                     Result.success(recipes.body()!!)
                 } else {

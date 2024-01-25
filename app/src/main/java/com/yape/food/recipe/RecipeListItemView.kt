@@ -36,6 +36,7 @@ import com.yape.food.R
 import com.yape.food.model.RecipeItem
 import com.yape.food.ui.theme.YapeFoodTheme
 
+val itemViewHeight = 280.dp
 
 @Preview(showBackground = true)
 @Composable
@@ -44,7 +45,7 @@ fun RecipeListItemViewPreview() {
         RecipeListItemView(
             RecipeItem(0, "Recipe name"),
             onClick = {},
-            modifier = Modifier.height(260.dp)
+            modifier = Modifier.height(itemViewHeight)
         )
     }
 }
@@ -68,10 +69,16 @@ fun RecipeListItemView(
                 Image(
                     painter = painterResource(id = R.drawable.lunch),
                     contentScale = ContentScale.Crop,
-                    contentDescription = "food"
+                    contentDescription = "food",
+                    modifier = Modifier.fillMaxSize()
                 )
             } else {
-                AsyncImage(model = recipe.url, contentDescription = "recipe")
+                AsyncImage(
+                    model = recipe.url,
+                    contentDescription = "recipe",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
             Column(
                 verticalArrangement = Arrangement.Bottom,
@@ -80,7 +87,7 @@ fun RecipeListItemView(
                     .background(
                         brush = Brush.verticalGradient(
                             colorStops = arrayOf(
-                                0.3f to Color.Transparent,
+                                0.2f to Color.Transparent,
                                 0.99f to Color.DarkGray
                             )
                         )
@@ -92,7 +99,7 @@ fun RecipeListItemView(
                     color = Color.White,
                     modifier = Modifier
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                        .widthIn(max = 160.dp)
+                        .widthIn(max = 180.dp)
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

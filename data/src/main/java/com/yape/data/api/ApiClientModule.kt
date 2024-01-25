@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiClientModule {
-    private const val BASE_URL = "http://demo5922620.mockable.io/"
+    private const val BASE_URL = "https://demo5922620.mockable.io/"
 
     @Singleton
     @Provides
