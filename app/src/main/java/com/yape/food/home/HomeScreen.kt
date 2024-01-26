@@ -36,7 +36,7 @@ fun HomeScreen(
             is HomeState.Success -> {
                 RecipeListView(
                     list = state.list,
-                    onSelect = {},
+                    onSelect = { onEvent(HomeEvent.OnSelected(it))},
                     modifier = Modifier.fillMaxSize()
                 )
             }

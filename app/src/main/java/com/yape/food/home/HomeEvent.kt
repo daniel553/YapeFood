@@ -13,5 +13,9 @@ sealed interface HomeState {
 }
 
 sealed interface HomeEvent {
-    data class onSelected(val selected: RecipeItem) : HomeEvent
+    data class OnSelected(val selected: RecipeItem) : HomeEvent
+}
+
+sealed interface HomeUiEvent {
+    data class DetailsScreen(val id: Long): HomeUiEvent
 }

@@ -15,4 +15,10 @@
     <string name="recipe_list_error">Woo, something went wrong!</string>
     <string name="recipe_list_error_sub">Let\'s start again for new recipes</string>
 
+    //Recipe
+    <string name="recipe_ingredients">Ingredients</string>
+    <string name="recipe_instructions">Step by step</string>
+    <string name="loading_title">Loading</string>
+    <string name="loading_subtitle">please wait…</string>
+
 </resources>
