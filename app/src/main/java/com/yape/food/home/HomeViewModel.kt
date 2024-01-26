@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun subscribe() {
+    suspend fun subscribe() {
         subscribeToRecipesUseCase()
             .onStart {
                 Log.d("HomeViewModel", "Starting collecting recipes")

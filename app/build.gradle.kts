@@ -17,7 +17,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //💡a custom hilt test runner based on Android Junit4 runner
+        testInstrumentationRunner = "com.yape.food.HiltTestRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -47,7 +49,15 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE*,NOTICE.txt}"
+        }
+    }
+
+    testOptions {
+        packaging {
+            jniLibs {
+                useLegacyPackaging = true
+            }
         }
     }
 }
@@ -86,6 +96,14 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    //Mockk
+    androidTestImplementation(libs.mockk.android)
+    //Hilt
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.hilt.android)
+    kspAndroidTest(libs.hilt.android.compiler)
+
     //Debug
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
