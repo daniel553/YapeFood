@@ -2,22 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="HomeScreenTest">
+      <entry key="RecipeDaoTest">
         <State />
       </entry>
-      <entry key="HomeViewModelTest">
-        <State />
-      </entry>
-      <entry key="NavigationTest">
-        <State />
-      </entry>
-      <entry key="RecipeListViewTest">
+      <entry key="RecipeRepositoryTest">
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="givenEvent_thenLoadingStateIsSet()">
         <State />
       </entry>
     </value>

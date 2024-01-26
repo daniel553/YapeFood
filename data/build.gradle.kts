@@ -12,7 +12,8 @@ android {
     defaultConfig {
         minSdk = 26
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //💡a custom hilt test runner based on Android Junit4 runner
+        testInstrumentationRunner = "com.yape.data.HiltTestRunner"
     }
 
     buildTypes {
@@ -65,7 +66,9 @@ dependencies {
 
     //Coroutines
     androidTestImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     //Mockk
     androidTestImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.android)
 }
