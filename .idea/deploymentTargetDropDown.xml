@@ -5,7 +5,10 @@
       <entry key="RecipeDaoTest">
         <State />
       </entry>
-      <entry key="RecipeRepositoryTest">
+      <entry key="RecipeRemoteDatasourceTest">
+        <State />
+      </entry>
+      <entry key="RecipeServiceTest">
         <State />
       </entry>
       <entry key="app">

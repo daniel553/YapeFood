@@ -71,4 +71,9 @@ dependencies {
     //Mockk
     androidTestImplementation(libs.mockk.android)
     testImplementation(libs.mockk.android)
+
+    //Web mock server
+    testImplementation(libs.test.webmockserver)
+    androidTestImplementation(libs.test.webmockserver)
+    implementation(libs.okhttp)
 }
