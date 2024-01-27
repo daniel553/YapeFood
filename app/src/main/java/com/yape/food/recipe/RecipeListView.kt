@@ -36,6 +36,7 @@ import com.yape.food.model.RecipeItem
 import com.yape.food.ui.MessageCardView
 import com.yape.food.ui.theme.YapeFoodTheme
 
+val headerHeight = 180.dp
 
 /**
  * 💡The recipes list view is like a RecyclerView in a compose way, so as a recycler view it
@@ -50,55 +51,57 @@ fun RecipeListView(
     modifier: Modifier = Modifier,
     query: String,
 ) {
-    if (list.isEmpty()) {
-        //💡empty list placeholder
-        RecipeListEmptyView(
-            query = query,
-            onSearch = { onSearch(it) },
-            modifier = modifier
-                .fillMaxWidth()
-                .testTag(RecipeListViewTag.EmptyTag.name)
-        )
-    } else {
-        Box(modifier = modifier.fillMaxSize()) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .testTag(RecipeListViewTag.ListTag.name)
-            ) {
-                //💡Header view
-                item {
+
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(RecipeListViewTag.ListTag.name)
+        ) {
+            //💡Header view
+            item {
+                if (list.isEmpty()) {
+                    //💡empty list placeholder
+                    RecipeListEmptyView(
+                        query = query,
+                        onSearch = { onSearch(it) },
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .height(headerHeight)
+                            .testTag(RecipeListViewTag.EmptyTag.name)
+                    )
+                } else {
                     RecipeHeaderView(
                         modifier = Modifier
-                            .height(180.dp)
+                            .height(headerHeight)
                             .testTag(
                                 RecipeListViewTag.HeaderTag.name
                             )
                     )
                 }
-                //💡 It's a good practice to define the key of the item
-                items(list, key = { recipe -> recipe.id }) { recipe ->
-                    RecipeListItemView(
-                        recipe = recipe,
-                        modifier = Modifier
-                            .height(itemViewHeight)
-                            .fillMaxWidth()
-                            .animateItemPlacement()
-                            .testTag(RecipeListViewTag.ListItem.name)
-                    ) {
-                        onSelect(recipe)
-                    }
+            }
+            //💡 It's a good practice to define the key of the item
+            items(list, key = { recipe -> recipe.id }) { recipe ->
+                RecipeListItemView(
+                    recipe = recipe,
+                    modifier = Modifier
+                        .height(itemViewHeight)
+                        .fillMaxWidth()
+                        .animateItemPlacement()
+                        .testTag(RecipeListViewTag.ListItem.name)
+                ) {
+                    onSelect(recipe)
                 }
             }
-            RecipeSearchView(
-                query = query,
-                onSearch = { onSearch(it) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 32.dp, end = 32.dp, top = 32.dp)
-                    .testTag(RecipeListViewTag.SearchTag.name)
-            )
         }
+        RecipeSearchView(
+            query = query,
+            onSearch = { onSearch(it) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 32.dp, end = 32.dp, top = 32.dp)
+                .testTag(RecipeListViewTag.SearchTag.name)
+        )
     }
 }
 
@@ -181,7 +184,7 @@ fun RecipeListLoadingView(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             //💡Header view
             item {
-                RecipeHeaderView(modifier = Modifier.height(180.dp))
+                RecipeHeaderView(modifier = Modifier.height(headerHeight))
             }
 
             //💡The intention is to create like a skeleton of a list, but quite simple with animation
@@ -222,7 +225,7 @@ fun RecipeListErrorView(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             //💡Header view
             item {
-                RecipeHeaderView(modifier = Modifier.height(180.dp))
+                RecipeHeaderView(greetings = false, modifier = Modifier.height(headerHeight))
             }
 
             item {
