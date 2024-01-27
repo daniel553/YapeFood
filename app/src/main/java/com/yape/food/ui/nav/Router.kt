@@ -9,7 +9,7 @@ sealed class Router(val destination: String) {
 
     data object HomeScreen : Router("HomeScreen")
     data object DetailScreen : Router("DetailScreen/{$ID}")
-    data object MapScreen : Router("MapScreen/{$ID}")
+    data object MapScreen : Router("MapScreen/{$COORDINATES}")
 
     //💡Build a route like DetailScreen/1234
     fun buildRoute(arg: String): String {
@@ -18,5 +18,6 @@ sealed class Router(val destination: String) {
 
     companion object {
         const val ID: String = "id"
+        const val COORDINATES: String= "coordinates"
     }
 }

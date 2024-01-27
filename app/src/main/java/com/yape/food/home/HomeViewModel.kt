@@ -7,7 +7,9 @@ import com.yape.domain.recipe.FetchAllRecipesUseCase
 import com.yape.domain.recipe.SubscribeToRecipesUseCase
 import com.yape.food.model.toRecipeItemList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
@@ -32,6 +34,9 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(HomeState.Loading)
     val uiState = _uiState.asStateFlow()
 
+    private val _uiEvent: MutableSharedFlow<HomeUiEvent> = MutableSharedFlow()
+    val uiEvent = _uiEvent.asSharedFlow()
+
     init {
         viewModelScope.launch {
             subscribe()
@@ -39,7 +44,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun subscribe() {
+    suspend fun subscribe() {
         subscribeToRecipesUseCase()
             .onStart {
                 Log.d("HomeViewModel", "Starting collecting recipes")
@@ -55,6 +60,14 @@ class HomeViewModel @Inject constructor(
                     HomeState.Error
                 }
             }.stateIn(viewModelScope)
+    }
+
+    fun onEvent(event: HomeEvent) {
+        viewModelScope.launch {
+            when (event) {
+                is HomeEvent.OnSelected -> _uiEvent.emit(HomeUiEvent.DetailsScreen(event.selected.id))
+            }
+        }
     }
 
 }

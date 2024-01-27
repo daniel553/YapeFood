@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import com.yape.food.recipe.RecipeListErrorView
 import com.yape.food.recipe.RecipeListLoadingView
@@ -36,23 +37,35 @@ fun HomeScreen(
             is HomeState.Success -> {
                 RecipeListView(
                     list = state.list,
-                    onSelect = {},
-                    modifier = Modifier.fillMaxSize()
+                    onSelect = { onEvent(HomeEvent.OnSelected(it)) },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .testTag(HomeScreenTestTag.RecipeListViewTag.name)
                 )
             }
 
             HomeState.Loading -> {
                 RecipeListLoadingView(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag(HomeScreenTestTag.RecipeListLoadingViewTag.name)
                 )
             }
 
             HomeState.Error -> {
                 RecipeListErrorView(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .testTag(HomeScreenTestTag.RecipeListErrorViewTag.name)
                 )
             }
 
         }
     }
+}
+
+enum class HomeScreenTestTag {
+    RecipeListViewTag,
+    RecipeListLoadingViewTag,
+    RecipeListErrorViewTag
 }

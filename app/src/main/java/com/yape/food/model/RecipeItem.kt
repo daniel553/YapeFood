@@ -10,6 +10,12 @@ data class RecipeItem(
     val instructions: List<String> = emptyList(),
     val url: String? = null,
     val rating: Int = 0,
+    val location: LocationItem? = null
+)
+
+data class LocationItem(
+    val lat: Double,
+    val lon: Double,
 )
 
 // Transformation --------
@@ -22,5 +28,6 @@ fun Recipe.toRecipeItem(): RecipeItem = RecipeItem(
     ingredients = this.ingredients,
     instructions = instructions,
     url = this.url,
-    rating = this.rating
+    rating = this.rating,
+    location = LocationItem(this.location.lat, this.location.lon)
 )

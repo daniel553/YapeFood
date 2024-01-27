@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
@@ -23,14 +24,23 @@ object ApiClientModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(@ApiUrl apiUrl: String): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(apiUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    @Singleton
+    @Provides
+    @ApiUrl
+    fun provideApiURL(): String = BASE_URL
 }
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class ApiUrl
 
 /**
  * Retrofit

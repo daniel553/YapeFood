@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,13 +50,27 @@ fun RecipeListView(
 ) {
     if (list.isEmpty()) {
         //💡empty list placeholder
-        RecipeListEmptyView(modifier = modifier.fillMaxWidth())
+        RecipeListEmptyView(
+            modifier = modifier
+                .fillMaxWidth()
+                .testTag(RecipeListViewTag.EmptyTag.name)
+        )
     } else {
         Box(modifier = modifier.fillMaxSize()) {
-            LazyColumn(modifier = modifier) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag(RecipeListViewTag.ListTag.name)
+            ) {
                 //💡Header view
                 item {
-                    RecipeHeaderView(modifier = Modifier.height(180.dp))
+                    RecipeHeaderView(
+                        modifier = Modifier
+                            .height(180.dp)
+                            .testTag(
+                                RecipeListViewTag.HeaderTag.name
+                            )
+                    )
                 }
                 //💡 It's a good practice to define the key of the item
                 items(list, key = { recipe -> recipe.id }) { recipe ->
@@ -65,6 +80,7 @@ fun RecipeListView(
                             .height(itemViewHeight)
                             .fillMaxWidth()
                             .animateItemPlacement()
+                            .testTag(RecipeListViewTag.ListItem.name)
                     ) {
                         onSelect(recipe)
                     }
@@ -75,6 +91,7 @@ fun RecipeListView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 32.dp, end = 32.dp, top = 32.dp)
+                    .testTag(RecipeListViewTag.SearchTag.name)
             )
         }
     }
@@ -155,7 +172,7 @@ fun RecipeListLoadingView(
             label = "color"
         )
 
-        LazyColumn(modifier = modifier) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             //💡Header view
             item {
                 RecipeHeaderView(modifier = Modifier.height(180.dp))
@@ -196,7 +213,7 @@ fun RecipeListErrorView(
 ) {
     Box(modifier = modifier.fillMaxSize()) {
 
-        LazyColumn(modifier = modifier) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             //💡Header view
             item {
                 RecipeHeaderView(modifier = Modifier.height(180.dp))
@@ -220,4 +237,12 @@ fun RecipeListErrorViewPreview() {
     YapeFoodTheme {
         RecipeListErrorView()
     }
+}
+
+enum class RecipeListViewTag {
+    HeaderTag,
+    ListTag,
+    SearchTag,
+    EmptyTag,
+    ListItem
 }
