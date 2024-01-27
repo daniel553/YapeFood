@@ -46,11 +46,15 @@ import com.yape.food.ui.theme.YapeFoodTheme
 fun RecipeListView(
     list: List<RecipeItem>,
     onSelect: (RecipeItem) -> Unit,
-    modifier: Modifier = Modifier
+    onSearch: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    query: String,
 ) {
     if (list.isEmpty()) {
         //💡empty list placeholder
         RecipeListEmptyView(
+            query = query,
+            onSearch = { onSearch(it) },
             modifier = modifier
                 .fillMaxWidth()
                 .testTag(RecipeListViewTag.EmptyTag.name)
@@ -87,7 +91,8 @@ fun RecipeListView(
                 }
             }
             RecipeSearchView(
-                onSearch = {},
+                query = query,
+                onSearch = { onSearch(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 32.dp, end = 32.dp, top = 32.dp)
@@ -107,20 +112,21 @@ fun RecipeListViewPreview() {
         )
     }
     YapeFoodTheme {
-        RecipeListView(list, {}, modifier = Modifier.fillMaxWidth())
+        RecipeListView(list, {}, {}, modifier = Modifier.fillMaxWidth(), "")
     }
 }
 
 //💡Empty list placeholder when even a "success state" no items are presented
 @Composable
-fun RecipeListEmptyView(modifier: Modifier = Modifier) {
+fun RecipeListEmptyView(query: String, onSearch: (String) -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
     ) {
         Box {
             RecipeHeaderView(modifier = Modifier.height(160.dp))
             RecipeSearchView(
-                onSearch = {},
+                onSearch = { onSearch(it) },
+                query = query,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 32.dp, end = 32.dp, top = 32.dp)
@@ -149,7 +155,7 @@ fun RecipeListEmptyView(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun RecipeListLoadingViewPreview() {
-    RecipeListEmptyView()
+    RecipeListEmptyView("", {})
 }
 
 

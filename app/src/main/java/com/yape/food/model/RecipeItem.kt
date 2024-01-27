@@ -31,3 +31,7 @@ fun Recipe.toRecipeItem(): RecipeItem = RecipeItem(
     rating = this.rating,
     location = LocationItem(this.location.lat, this.location.lon)
 )
+
+fun RecipeItem.contains(query: String): Boolean {
+    return (this.name.contains(query) || this.ingredients.toString().contains(query))
+}
