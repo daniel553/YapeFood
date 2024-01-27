@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -82,6 +83,10 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.coil.compose)
 
+    //Maps
+    implementation(libs.maps.compose)
+    //implementation(libs.maps.ktx.std)
+
     //Unit tests
     testImplementation(libs.junit)
 
@@ -107,4 +112,9 @@ dependencies {
     //Debug
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+}
+
+secrets {
+    //Check this file for more information about the maps apikey
+    defaultPropertiesFileName = "local.defaults.properties"
 }
