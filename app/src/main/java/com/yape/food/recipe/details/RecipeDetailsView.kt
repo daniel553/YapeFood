@@ -145,7 +145,7 @@ fun RecipeDetailsView(
             Spacer(modifier = Modifier.weight(1f))
             FilledIconButton(
                 onClick = { recipe.location?.let { onMapPressed(it) } },
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             ) {
                 Icon(imageVector = Icons.Default.LocationOn, contentDescription = "back")
             }
