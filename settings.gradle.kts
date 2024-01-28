@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "YapeFood"
 include(":app")
+include(":domain")
+include(":data")

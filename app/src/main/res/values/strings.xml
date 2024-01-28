@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">YapeFood</string>
+
+    //Home screen
+    <string name="home_morning">Good Morning!</string>
+    <string name="home_afternoon">Good Afternoon!</string>
+    <string name="home_evening">Good Evening!</string>
+    <string name="home_time_default">Welcome back!</string>
+
+    //Empty list
+    <string name="recipe_list_empty">Easy recipes for your life!</string>
+    <string name="recipe_list_empty_sub">Start typing for new recipes</string>
+
+    //Error list
+    <string name="recipe_list_error">Woo, something went wrong!</string>
+    <string name="recipe_list_error_sub">Let\'s start again for new recipes</string>
+
+    //Recipe
+    <string name="recipe_ingredients">Ingredients</string>
+    <string name="recipe_instructions">Step by step</string>
+    <string name="loading_title">Loading</string>
+    <string name="loading_subtitle">please wait…</string>
+
+    //Maps
+    <string name="map_title">Recipe origins</string>
+    <string name="map_subtitle">Get instructions to get here</string>
+    <string name="more_details">More</string>
+
 </resources>

@@ -2,6 +2,18 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="HomeScreenTest">
+        <State />
+      </entry>
+      <entry key="HomeViewModelTest">
+        <State />
+      </entry>
+      <entry key="RecipeListViewTest">
+        <State />
+      </entry>
+      <entry key="Tests in 'com.yape.food'">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
