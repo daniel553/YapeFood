@@ -3,6 +3,7 @@ package com.yape.food.recipe
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,17 +30,27 @@ fun RecipeHeaderViewPreview(
     modifier: Modifier = Modifier
 ) {
     YapeFoodTheme {
-        RecipeHeaderView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
-        )
+        Column {
+            RecipeHeaderView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+            )
+
+            RecipeHeaderView(
+                greetings = false,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+            )
+        }
     }
 }
 
 @Composable
 fun RecipeHeaderView(
     modifier: Modifier = Modifier,
+    greetings: Boolean = true,
 ) {
     val time = Calendar.getInstance().asTimeRange()
     Box(
@@ -64,13 +75,21 @@ fun RecipeHeaderView(
                     )
                 )
         ) {
-            Text(
-                text = stringResource(id = time.asResourceStringId()),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp, start = 16.dp)
-            )
+            if (greetings) {
+                Text(
+                    text = stringResource(id = time.asResourceStringId()),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp, start = 16.dp)
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp)
+                )
+            }
         }
     }
 }

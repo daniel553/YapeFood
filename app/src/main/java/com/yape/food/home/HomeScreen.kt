@@ -37,7 +37,9 @@ fun HomeScreen(
             is HomeState.Success -> {
                 RecipeListView(
                     list = state.list,
+                    query = state.query,
                     onSelect = { onEvent(HomeEvent.OnSelected(it)) },
+                    onSearch = { onEvent(HomeEvent.OnSearch(it)) },
                     modifier = Modifier
                         .fillMaxSize()
                         .testTag(HomeScreenTestTag.RecipeListViewTag.name)

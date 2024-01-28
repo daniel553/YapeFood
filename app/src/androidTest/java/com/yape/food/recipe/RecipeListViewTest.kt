@@ -32,7 +32,7 @@ internal class RecipeListViewTest {
     @Test
     fun givenNonEmptyList_whenShowList_thenShowItems() {
         composeTestRule.setContent {
-            RecipeListView(list = sampleList, onSelect = {})
+            RecipeListView(list = sampleList, onSelect = {}, onSearch = {}, query = "")
         }
 
         composeTestRule.onNodeWithTag(RecipeListViewTag.ListTag.name).assertIsDisplayed()
@@ -42,7 +42,7 @@ internal class RecipeListViewTest {
     @Test
     fun givenEmptyList_whenShowList_thenShowItems() {
         composeTestRule.setContent {
-            RecipeListView(list = emptyList(), onSelect = {})
+            RecipeListView(list = emptyList(), onSelect = {}, onSearch = {}, query = "")
         }
 
         composeTestRule.onNodeWithTag(RecipeListViewTag.EmptyTag.name).assertIsDisplayed()
@@ -51,7 +51,12 @@ internal class RecipeListViewTest {
     @Test
     fun givenList_whenScrolled_thenMustDisplayAll() {
         composeTestRule.setContent {
-            RecipeListView(list = sampleList, onSelect = { onSelect(it) })
+            RecipeListView(
+                list = sampleList,
+                onSelect = { onSelect(it) },
+                onSearch = {},
+                query = ""
+            )
         }
 
         //💡Verify scrollable list to bottom one
@@ -67,7 +72,12 @@ internal class RecipeListViewTest {
     @Test
     fun givenRecipe_whenSelect_thenOnSelectEventTriggered() {
         composeTestRule.setContent {
-            RecipeListView(list = sampleList, onSelect = { onSelect(it) })
+            RecipeListView(
+                list = sampleList,
+                onSelect = { onSelect(it) },
+                onSearch = {},
+                query = ""
+            )
         }
 
         //💡Verify the click on list item
